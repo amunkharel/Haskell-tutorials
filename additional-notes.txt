@@ -1,0 +1,107 @@
+-- Comments :l <filename> to load the file
+-- :r to run the file
+
+{-  Multiline Comments-}
+
+
+
+-- Int - whole number -2^63 2 ^63
+
+maxInt = maxBound :: Int
+
+sumOfNums = sum [1..100]
+
+trueAndFalse = True && trueAndFalse
+
+trueOrFalse = True || False
+
+-- List are linkely list, can only add to the beginning
+
+primeNumbers = [3,5,7,11]
+
+morePrime = primeNumbers ++ [13, 17, 19]
+
+favNums = 2 : 7 : 21 : 66 : []
+
+multList = [[3,5,7] , [11, 13, 17]]
+
+morePrimes2 = 2 : morePrime
+
+lenPrime = length morePrimes2
+
+revPrime = reverse morePrimes2
+
+listTimes2 = [x * 2 | x <- [1..10]]
+
+divsBy9N13 = [x | x <- [1..500], x `mod` 13 == 0, x `mod` 9 == 0]
+
+sumOfLists = zipWith (+) [1, 2, 3, 4, 5] [6, 7, 8, 9, 10]
+
+listBiggerThen5 = filter (>5) morePrime
+
+takeWhile (<= 20) [2,4..] //gives you [2,4,6,8,10,12,14,16,18,20]
+
+mulitpleOfList = foldl (*) 1 [2,3,4,5] //gives you 120 multiples list from left to right. can use foldr 
+
+multTable = [[x * y | y <- [1..10]] | x <- [1..10]] //gives multoplication table from 1 to 10
+
+## Tuples
+
+List with different datatypes
+
+randTuple = (1, "Random Tuple")
+
+bobSmith = ("Bob Smith", 52)
+
+bobsName = fst bobSmith
+
+bobsAge = snd bobSmith
+
+names = ["Bob", "Mary", "Tom"]
+
+addressess = ["123 Main", "234 North", "567 South"]
+
+namesNAddress = zip names addressess
+
+## Functions
+
+let num7 = 7
+
+let getTriple x = x * 3
+
+main = do
+    putStrnLn "What's your name"
+    name <- getLine
+    putStrnLn ("Hello" ++ name)
+
+    // quit and type 'stack ghc -- hello.hs ' it compiled
+    // type './hello'
+
+## Type Decleration to create a Function
+
+addMe :: Int->Int->Int
+
+
+--funcName param1 param2 = operations (returned value)
+
+addMe x y = x + y
+
+## Recursion 
+
+factorial :: Int -> Int
+
+factorial 0 = 1
+factorial n = n * factorial (n - 1)
+
+// Another way of doing factorial is 
+prodFact n = product [1..n]
+
+//Is odd func using guards
+isOdd :: Int -> Bool
+
+isOdd n
+    | n `mod` 2 == 0 = False
+    |otherwise = True
+
+//Minute 39 haskell tutorial video
+

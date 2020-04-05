@@ -1,0 +1,86 @@
+## Types and Classes
+
+Type is a name for a collection of related values. 
+Boolean type is called Bool
+True and False of type Bool
+Applying function to one or more arguments of the wrong type is called a type error. 
+
+Type error can be found in compile time. Make safe programs
+
+Bool
+Char
+String
+Int - fixed precision integers
+Integer- arbitrary precision integers
+Float 
+
+list is sequence of values that have the same type. 
+
+[False, True] :: [Bool]
+['a', 'b'] :: [Char]
+[['a'], ['b', 'c']] :: [[Char]]
+
+Can have list of arbitrary types:
+Example:
+[[[char]]]
+
+Tuples:
+
+(1, True, 'c') :: (int, Bool, Char) \\ Values can be different types. 
+
+Function Types:
+
+Function is mapping from values of one type to values of another type. 
+
+not :: Bool -> Bool
+
+isDigit :: Char -> Bool
+
+In lambda expression
+\x -> ..x..
+
+add :: (Int, Int) -> Int
+
+add(x, y) = x + y
+
+Func <T> equivalent to () -> T
+
+Func <S, T> equivalent to S -> T
+
+Action <T> equivalent to T -> ()
+
+add = \(x,y) -> x + y
+
+In Haskell, we write in a curried fashion
+add: Int -> (Int -> Int)
+add x y = x + y
+
+add takes a int which returns function which takes int and returns int
+
+Can write as add x = \y -> x + y
+//Also a curried function
+
+mult :: Int -> (Int -> (Int -> Int))
+
+mult x y z = x * y * z
+
+can be written as f:: Int -> Int -> Int -> Int creates less noise. 
+
+We can used curried function for partially applying. 
+
+(f 3) becomes Int -> Int -> Int
+
+((f(3) 2) 1) 
+
+mult x y z
+means ((mult x) y) z
+Unless tupling is explicity required, all functions in Haskell are normally defined in curried form 
+
+Polymorphic functions:
+
+A function is called Polymorphic (of many forms) if its type contains one or more type variables. 
+
+length :: [a] -> Int
+for any type a, length takes the list of values and returns an integer
+
+

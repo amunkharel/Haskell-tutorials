@@ -1,0 +1,79 @@
+### Chapter First Steps. 
+
+Select nth element of the list
+[1, 2, 3, 4] !! 2 will give 3 , indexing starts from 0
+
+take 3 [1, 2, 3, 4, 5] //takes the first three element of the list
+[1, 2, 3]
+
+drop 3[1,2,3, 4, 5]
+[4,5]
+
+Append: [1,2,3] ++ [4, 5]
+[1,2,3,4,5]
+
+In Haskell function application defined with space and multiplication id denoted using *. 
+
+function application is assumed to have higher priority than all other operators. 
+
+f a + b //this means (f a) + b rather than f(a + b)
+
+//Haskell is optimized to be very light and fluffy
+
+Mathematics         Haskell
+f(x)                f x
+f(x, y)             f x y
+f(g(x))             f(g x)
+f(x, g(y))          f x (g y)
+f(x)g(y)            f x * g y
+
+double x = x + x
+
+quadruple x = double (double x)
+
+quadruple = double . double //How would a Haskell programmer write
+(f. g) x = f(g x)
+quadruple :: Num a => a -> a //Num a is like an interface
+//This is not for all a but for numbers since we are using addition
+
+take (double 2) [1,2,3,4,5,6] and we get [1,2,3,4]
+
+factorial n = product [1...n]
+
+average ns = sum ns `div` length ns
+[1..n] = [1,2,...,n]
+[1..] = [1,2,3.....]
+
+xs = take n [1..] //Haskell will work because it is lazy. It has lazy evaluations
+product (take n [1..])
+
+`div` - we see the ticks to use infix operators. 
+
+div (sum ns) (length ns) //We can write like this. 
+
+Naming Requirement:
+Function must start with lowercase. 
+
+Type name always start will uppercase
+Example
+data List a = ...
+
+length xs //length of x's
+flatten xss // list of list. 
+
+sequence of definitions, each definition must begin precisely on same column. 
+x = 10
+y = 12
+Correct
+
+x = 10
+    y = 12
+Wrong
+
+a = b + c
+    where
+        b = 1
+        c = 2
+d = a * 2
+
+can be written like that for a = b + c where {b = 1 ; c = 2} d = a * 2
