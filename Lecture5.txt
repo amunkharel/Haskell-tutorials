@@ -1,0 +1,84 @@
+## List Comphrehensions
+
+Like set Comphrehensions in mathematics.
+New lists can be created from old lists
+
+[(x,y) | x <- [1,2,3], y <- [4,5]]
+
+[(1,4) (1,5) ...]
+foreach loop var x 1,2,3
+    foreach loop var [4,5]
+    (x,y)
+
+[x ^ 2 | x <- [1..5]]
+
+The list [1,4,9,16,25] of all numbers x ^2 
+
+Dependant Generators
+    [(1,4) (1,5) ...]
+foreach loop var x 1,2,3
+    foreach loop var [x,5]
+    (x,y)
+
+    Later generators can be dependent on the variable 
+
+concat :: [[a]] -> [a]
+using dependant generators
+concat xss
+= [x | xs <- xss, x <- xs]
+
+Guards
+List Comphrehensions can use guards to restrict the values produced by earlier generators
+
+[x | x <- [1..10], even x]
+[2,4,6,8,10] will be generated. 
+
+factors :: Int -> [Int]
+
+factors n = [x | x <- [1..n], n `mod` x == 0]
+
+prime :: Int -> Bool
+prime n = factors n == [1,n]
+
+primes :: Int -> [Int]
+
+primes n = [x | x <- [2..n], prime x]
+
+primes 40
+[2,3,....]
+
+The Zip Function
+zip :: [a] -> [b] -> [(a,b)]
+
+zip ['a','b','c'] [1,2,3,4]
+[('a', 1), ('b', 2), ('c', 3)]
+
+Using zip we can define a function returns the list of all pairs of adjacent elements from a list
+
+pairs :: [a] -> [(a,a)]
+pairs xs = zip xs (tail xs)
+
+pairs [1,2,3,4] gives
+[(1,2),(2,3), (3,4)]
+
+
+Using pairs we can define a function that decides if the elements in a list are sorted. 
+sorted :: Ord a => [a] -> Bool
+
+sorted xs = and [x <= y | (x,y) <- pairs xs]
+
+Using zip we can define a function that returns the list of all positions of a value in a list. 
+
+xs = [1,2,3,4]
+zip xs [0..]
+[(1,0), (2, 0)..]
+
+Strings are list of characters in Haskell. However, enclosed in double quotes. 
+"abc" :: String /[Char]
+
+Similarly, list Comphrehensions can also be used to define functions on strings, such as function
+that counts the lower-case letters in a string:
+lowers :: String -> Int
+lowers xs = 
+        length [x | x <- xs, isLower x]
+> lowers "Haskell" gives value of 6
