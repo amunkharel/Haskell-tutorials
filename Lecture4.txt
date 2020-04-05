@@ -1,0 +1,107 @@
+## Defining Functions
+
+Guarded Equations:
+Another alternative to conditionals, functions can also be defined using guarded equations.
+
+abs n | n >= 0 = n
+      | otherwise = -n
+
+abs n = n , n >= 0
+          , otherwise 
+
+The catch all condition otherwise is defined in the prelude by otherwise = True
+
+'=' for decleartion 
+and '==' for equality. 
+
+Pattern Matching:
+
+Similar to dynamic disapatch in OOP
+
+not :: Bool -> Bool
+
+not False = True
+not True = False
+
+(&&):: Bool -> (Bool -> Bool)
+True && x = True, x == True
+                = False, x == False
+True && True = True
+_ && _ = False
+_ are wildcard, which includes everything else. 
+True, False and _|_
+
+f x = 47111
+f(True && Bottom) 
+f(Bottom ) = 4711
+
+//we abstract over evaluation
+
+
+Patterns are matched in order. For example, the following definition always returns False:
+ _ && _ False
+ True && True = True
+Patterns are matched top to bottom and left to right. 
+
+ Pattern may not repeat variables. For example, the following definition gives an error:
+
+ b && b = b 
+ _ && _ = False
+
+ List Patterns:
+
+[1,2,3,4,5] :: [Int] - this is a syntatic sugar. 
+is equal to 
+1:(2: (3: (4: [])))
+
+head:: [a] -> a
+head (a:_) = a
+
+tail [a] -> [a]
+
+tail (a:as) = as
+
+Phil Walder written great paper in Functional Programming (Theorems for Free)
+
+x:xs patterns only match non-empty lists:
+
+head [] gives error. 
+
+x:xs patterns must be parenthesised because application has priority over (:). For example,
+the following definition gives an error:
+head x:_ = x
+
+Integer Pattern
+
+As in mathematics, functions on integers can be defined using n + k patterns, where n is an
+integer variable and k > 0 is an integer constant. 
+
+pred :: Int -> Int
+pred (n + 1) = n
+
+pred (n + 1) = n
+
+Lambda Expression:
+\x -> x + x
+Int -> Int
+Expression that takes int and returns int
+
+Lambda expressions can be used to give a formal meaning to functions defined using currying. 
+
+add x y = x + y
+means
+add = \x -> (\y -> x + y)
+
+Lambda expressions can be used to avoid naming functions that are only referenced once
+
+For example:
+odds n = map f[0..n-1]
+        where  
+        f x = x*2 + 1
+can be simplified to
+odds n = map (\x -> x*2 + 1) [0..n-1]
+
+1 + 2
+is same as
+(+) 1 2
+
