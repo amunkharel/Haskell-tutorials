@@ -84,3 +84,43 @@ length :: [a] -> Int
 for any type a, length takes the list of values and returns an integer
 
 
+Many of the functions defined in the standard prelude are Polymorphic.
+For Example:
+
+fst ::(a, b) -> a
+head :: [a] -> a
+take :: Int -> [a] -> [a]
+
+zip :: [a] -> [b] -> [(a,b)]
+
+id :: a -> a
+
+zip is a curried function takes list of a and list of b and returns list of pairs. 
+
+Takes a pair of list and returns list of pair. 
+
+Classes in haskell. 
+
+sum :: [a] -> a
+
+we need some constraints here. 
+
+sum :: Numa => [a] -> a //Implements the Num interface. 
+Both Int and Float implement the numeric interface. 
+
+Haskell has a number of type classes, including:
+Num: Numeric Types
+Eq: Equality Types
+Ord - Ordered Types
+
+Example:
+
+(+) ::Num a => a -> a -> a //only a's that have num inteface. 
+
+(==) :: Eq a => a -> a -> Bool 
+
+(<) :: Ord a => a -> a -> Bool 
+
+Useful Tips
+When defining a function, it is useful to begin by writing down its type
+
