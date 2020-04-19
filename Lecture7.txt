@@ -1,0 +1,158 @@
+## Higher Order Functions:
+
+How to mock a mockingbird- Recommended book
+
+Function that takes function as arguments is higher-order function. 
+
+twice :: (a -> a) -> (a-> a)
+twice f = f.f
+
+Why useful?
+Common Programming idioms can be encoded in the function itself. 
+Algebraic properties of higher-order functions, can be used to reason about programs. 
+
+> map (+1) [1,3,4,7]
+gives [2,4,5,8]
+
+(+1) is same as Lambdax -> x + 1
+
+Definition using list comphrehension
+map f xs = [f x | x <- xs]
+
+Map definition using recursion
+map f[] = []
+map f (x:xs) = f x : map f xs
+can be proved recursively
+
+filter:: (a->Bool) -> [a] -> [a]
+
+filter even [1..10]
+[2,4,6,8, 10]
+
+Filter defination using list comphrehension
+
+filter p xs = [x | x <- xs, p x]
+
+Filter defination using recursion 
+
+filter p [] = []
+
+filter p(x:xs)
+    | p x = x : filter p xs
+    | otherwise = filter p xs
+
+The Foldr Function 
+
+A number of functions on lists can be defined using the following 
+simple pattern of recursion. 
+f [] = v
+f(x:xs) = x + f xs
++ operator
+
+sum [] = 0
+sum (x:xs) = x + sum xs
+v = 0 and + operator is + 
+
+and [] = True
+and (x:xs) = x && and xs
+operator is && and v = True
+
+The higher-order library function foldr (fold right) encapsulates the simple pattern of recursion with
+the function (+) and the value v as arguments
+
+for example
+sum = foldr (+) 0
+
+product = foldr (*) 1
+
+foldr :: (a-> b -> b) -> b -> [a] -> b
+
+foldr f v [] = v
+foldr f v (x:xs) = f x (foldr f v xs)
+
+xs [(:) = f, [] = v]
+
+Recursive way of thinking about sum
+
+sum [1,2,3]
+= foldr (+) 0 [1,2,3]
+= foldr (+) 0 (1:(2:(3:[])))
+= 1 + (2 + (3 + 0))
+= 6
+
+Other Foldr Examples
+
+Even though foldr encapsulates a simple pattern of recursion,
+it can be used to define many more functions than might be expected
+
+Recall the length function 
+
+length :: [a] -> Int
+length [] = 0
+length (_:xs) = 1 + length xs
+
+length = foldr ( Lambda_ n -> 1 + n) 0
+length = sum . map (\_ -> 1)
+map all the elements of list to and find sum 
+
+reverse [] = []
+
+reverse (x:xs) = reverse xs ++ [x]
+
+Example:
+reverse [1,2,3]
+= reverse (1:(2:(3:[])))
+= (([] ++ [3]) ++ [2]) ++ [1]
+= [3,2,1]
+
+Reverse using foldr. 
+reverse = foldr (lambda x xs -> xs ++ [x]) []
+
+xs ++ ys = foldr (:) ys xs
+is the same as (++) ys xs = foldr (:) ys xs
+
+Why is Foldr useful?
+- Some recursive functions on lists, such as sum, are simpler to define using foldr
+- Algebraic properties can be proved 
+- advanced program can be readable for optimization 
+
+(.) ::(b->c)->(a->b) -> (a->c)
+f . g = lambda x -> f(g x)
+
+For example odd :: Int -> Bool
+
+odd = not . even
+
+
+More Higher Order Function  
+all :: (a-> Bool) -> [a] -> Bool
+> all even [2,4,6,8,10]
+True
+
+any :: (a -> Bool) -> [a] -> Bool 
+any p xs = or [p x | x <- xs]
+
+For example 
+> any isSpace "abc def"
+True
+
+
+takeWhile :: (a-> Bool) -> [a] -> [a]
+
+takeWhile p [] = []
+
+takeWhile p (x:xs) 
+        | p x = x : takeWhile p xs
+        | otherwise = []
+
+takeWhile isAlpha "abc def"
+"abc"
+
+dropWhile :: (a -> Bool) -> [a] -> [a]
+
+dropWhile p [] = []
+dropWhile p (x:xs)
+    | p x = dropWhile p xs
+    | otherwise = x:xs
+dropWhile isSpace "   abc"
+"abc"

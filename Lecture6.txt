@@ -1,0 +1,8 @@
+## Recursive Functions:
+
+product :: [Int] -> Int
+product [] = 1
+product (x:xs) = x * product xs
+
+Using Pattern matching. 
+Video goes till 19:23
