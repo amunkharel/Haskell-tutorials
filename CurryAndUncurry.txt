@@ -1,0 +1,7 @@
+Curry :: ( (a, b) -> c) -> a-> b-> c 
+First function is uncurried function because it expects a tuple 
+Second function is a curried representation
+
+Uncurry :: (a-> b-> c) -> ((a,b)->c)
+first function here is curried and Second function is uncurried
+

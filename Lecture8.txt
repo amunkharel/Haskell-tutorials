@@ -1,0 +1,4 @@
+## Functional Parsers
+
+A parser is a program that analyses a piece of text to determine its syntatic structure. 
+

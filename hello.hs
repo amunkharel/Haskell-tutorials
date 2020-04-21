@@ -1,16 +1,39 @@
+compress :: Eq a => [a] -> [a]
+compress [] = []
+compress [x] = [x]
+compress (x:y:xs) = if x == y
+                    then compress (y:xs)
+                    else x:(compress (y:xs))
 
-import System.IO
+{-
+zip3 :: [x] -> [y] -> [z] -> [(x,y,z)]
+zip3 [] _ _ = []
+zip3 _ [] _ = []
+zip3 _ _ [] = []
+zip3 (x:xs) (y:ys) (z:zs) = (x, y, z) : zip3 xs ys zs
 
-n = a `div` length xs
-    where
-        a = 10
-        xs = [1,2,3,4,5]
 
-end a = head (reverse a)
 
-positions :: Eq a => a -> [a] -> [Int]
 
-positions x xs = 
-    [i | (x', i) <- zip xs [0..n], x == x']
-    where n = length xs - 1
+
+fst3' :: (x,y,z) -> x
+fst3' (x,_,_) = x
+
+snd3' :: (x,y,z) -> y
+snd3' (_,y,_) = y
+
+thrd3' :: (x,y,z) -> z
+thrd3' (_,_,z) = z
+
+unzip3 :: [(a,b,c)] -> ([a], [b], [c])
+unzip3 [] = ([], [], [])
+unzip3 ((a,b,c):xs) = (a:(fst3' rest), b:(snd3' rest), c:(thrd3' rest))
+    where rest = unzip3 xs
+
+-}
+
+
+nub :: Eq a => [a] -> [a]
+nub [ ] = [ ]
+nub (x:xs) = x : nub (filter (/= x) xs)
 
