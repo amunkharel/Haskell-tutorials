@@ -1,0 +1,31 @@
+Type signature of (+) is Num a => a -> a -> a
+
+we can uncurry is to make :t (uncurry (+))
+ which gives us (uncurry (+)) :: Num c => (c, c) -> c
+
+ map (uncurry (+)) (zip [1,2,3] [4,5,6])
+
+ Filter
+ filter' f (x:xs) = let rest = filter' f xs in if f x then x :rest else rest
+
+ We can use let like this. 
+ let x = 6 + 5 in x*x
+
+(let (x,y) = (6+5, 12-4) in x*y) + 234
+
+ Filter using where
+
+filter' _ [] = []
+filter' f (x:xs) = if f x then x:rest else rest
+                where rest = filter' f xs
+
+Making Map using Fold
+
+map'' = foldr (\x y -> f x : y) []
+
+-- Lessons from the lecture map, foldr, curry, uncurry, zip, const
+
+-- Try 
+Implementation of foldr
+foldr' f seed [] = seed 
+foldr' f seed (x:xs) = f x (foldr' f seed xs)

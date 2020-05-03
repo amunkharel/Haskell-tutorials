@@ -2,3 +2,9 @@
 
 A parser is a program that analyses a piece of text to determine its syntatic structure. 
 
+Parser a = String -> [(a, string)]
+if nothing, returns empty list and returns value if something in list. 
+
+item :: Parsar Char
+::String -> [(char, String)]
+::[Char] -> [(Char, [Char])]

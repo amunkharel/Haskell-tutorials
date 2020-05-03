@@ -1,0 +1,62 @@
+data Entity = Human String String String Int | Dog String Int deriving (Show)
+let bill = Human "Mr." "william" "baggins" 32 
+bill is of type Entity. 
+Type class show will print 
+
+*Main> let rover = Dog "Rover" 7
+*Main> rover
+Dog "Rover" 7
+
+We class this algebriac. Data constructor act like product of many constructors. and | is like a sum . 
+How to get age out of bill? 
+
+data Entity = Human { title :: String , firstName:: String, lastName:: String, age:: Int} | Dog { firstName:: String, age:: Int} deriving (Show)
+
+*Main> let bill = Human "Mr." "william" "baggins" 32*Main> let rover = Dog "Rover" 7*Main> bill
+Human {title = "Mr.", firstName = "william", lastName = "baggins", age = 32}
+
+*Main> title bill
+"Mr."
+
+greet x = "Hello " ++ title x 
+
+*Main> greet bill
+"Hello Mr."
+
+greet x@(Human _ _ _ _) = "Hello" ++ title x ++ firstName x
+greet x@(Dog _ _) = "Hello" ++ firstName x
+
+*Main> greet bill
+"HelloMr.william"
+
+data Coin = Penny | Nickel | Dime | Quarter | Half | Dollar deriving (Show, Eq)
+
+*Main> data Coin = Penny | Nickel | Dime | Quarter | Half | Dollar deriving (Show, Eq)
+*Main> let foo = Penny
+*Main> let bar = Nickel
+*Main> foo == bar
+False
+
+zero-arity (function wil zero arguments.)
+
+value Penny = 1
+value Nickel = 5
+value Dime = 10
+value Quarter = 25
+value Half = 50
+value Dollar = 100
+
+total coins = sum $ map value coins
+or we can write it like this
+total = sum . map value
+
+powerset' [] = [[]]
+powerset' (x:xs) = half ++ (map (x :)) half where half = powerset' xs
+
+makeChange amount coins = filter (\x -> total x == amount) (powerset coins)
+
+makeChange amount coins = head $filter ( (== amount) . total) (powerset coins) //point free style
+
+data List a = Nil | Cons {car :: a, cdr:: List a} deriving (Show, Eq)
+
+Polymorphic and recursive datatype. 
