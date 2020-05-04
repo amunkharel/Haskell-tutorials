@@ -1,0 +1,2 @@
+Haskell has a function (const 1) 'a'
+which ignores the second argument and just returns 1 in our example 
