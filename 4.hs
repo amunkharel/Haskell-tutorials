@@ -39,3 +39,23 @@ foldBTree f g(Fork xt yt) = g (foldBTree f g xt) (foldBTree f g yt)
 size' xt = foldBTree (const 1) (+) xt
 
 height' = foldBTree (const 0) (\ x y -> 1 + x `max` y)
+
+flatten' = foldBTree (\x -> [x]) (++)
+
+mapBTree' f = foldBTree (\x-> Leaf(f x)) Fork
+
+-- Rose tree can have any number of children 
+
+data RoseTree a = Node a [RoseTree a] deriving (Show, Eq)
+x = Node 5 [Node 1 [], Node 2 [Node 3 [], Node 4 [Node 5 []]]]
+
+fringe (Node x []) = [x]
+fringe (Node _ xs) = foldr (++) [] (map fringe xs)
+
+flattenRoseTree :: RoseTree a -> [a]
+flattenRoseTree (Node x []) = [x]
+flattenRoseTree (Node x xs) = x : concatMap flattenRoseTree xs
+
+sumRoseTree :: Num a => RoseTree a -> a
+sumRoseTree (Node x []) = x
+sumRoseTree (Node x xs) = x + (sum $ map sumRoseTree xs)
