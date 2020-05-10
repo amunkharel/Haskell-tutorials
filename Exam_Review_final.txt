@@ -1,0 +1,75 @@
+-- Num, Ord, Enum, Show, Eq, Functor understanding interfaces. 
+
+-- Functor - new typeclass for exam. 
+
+-- Functor (fmap)
+import Prelude hiding (Functor, fmap)
+class Functor m where 
+    fmap :: (a-> b) m a -> m b 
+
+instance Functor [] where
+    fmap f [] = []
+    fmap (x:xs) = fmap f xs
+
+data BTree a = Leaf a | Fork (BTree a) (BTree a) deriving (Show, Eq)
+--anything on tree is fair game
+
+foo = Fork (Leaf 1) (Leaf 2)
+
+instance Functor BTree where 
+    fmap f (Leaf x) = Leaf (f x)
+    fmap f (Fork xt yt) = Fork (fmap f xt) (fmap f yt)
+
+fmap (+ 1 ) foo
+
+data List a = Nil | Cons {car :: a, cdr :: List a} deriving (Show, Eq)
+
+data Troika a b c = Troika a b c deriving (Show, Eq)
+
+zip3 :: [a] -> [b] -> [c] -> [(a,b,c)]
+
+collect :: List a -> List b -> List c -> List (Troika a b c)
+
+collect Nil _ _ = Nil
+collect _ Nil _ = Nil
+collect _ _ Nil = Nil
+collect (Cons x xs) (Cons y ys) (Cons z zs) = Cons (Troika x y z) (collect xs ys zs)
+
+-- foldr :: (a-> b -> b) -> b -> [a] -> b
+gather :: ( a -> b -> b ) -> b -> List a -> b
+gather g seed Nil = seed
+gather g seed (Cons x xs) = g x (gather g seed xs) 
+
+translate :: List a -> [a]
+translate Nil = []
+translate (Cons x xs) = x : translate xs
+
+
+translate' = gather (:) []
+
+bar = Cons 'b' (Cons 'a' (Cons 'r' Nil))
+
+--wrtite collect with gather
+collect'' xs ys zs = foldr zipwith3 $ Troika (translate' xs) (translate' ys) (translate' zs)
+
+curry :: (a,b,c) -> d -> a -> b -> c -> d
+convert :: Troika a b c -> d -> a -> b -> c -> d
+convert f  = \a -> \b -> \c -> f (Troika a b c)
+
+revert :: Troika a b c -> (a, b, c)
+revert = convert (,,) 
+
+zip3 xs ys zs = zipWith (\(x,y) -> \z -> (x,y,z)) (zip xs ys) zs
+
+zipWith f xs ys = map (uncurry f) $ zip xs ys
+
+map f= foldr (\x ys -> f x : ys) []
+
+
+-- how do you write zip with fold?
+
+zip [] [] = []
+zip (x:xs) (y:ys) = (x,y) : zip xs ys
+
+zip [] [] = []
+zip (x:xs) = \(y:ys) -> (x,y) : zip xs ys

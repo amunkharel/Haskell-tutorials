@@ -1,0 +1,5 @@
+*Main> succ 7
+8
+*Main> succ 'a'
+'b'
+

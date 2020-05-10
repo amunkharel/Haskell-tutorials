@@ -1,0 +1,4 @@
+append, last, etc are expensive function. 
+
+Implementation of queue data structure. 
+
